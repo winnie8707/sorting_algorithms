@@ -1,67 +1,28 @@
 #include "sort.h"
-#include <stdio.h>
-/**
- *swap_node - swap a node for his previous one
- *@node: node
- *@list: node list
- *Return: return a pointer to a node which was enter it
- */
-listint_t *swap_node(listint_t *node, listint_t **list)
-{
-	listint_t *back = node->prev, *current = node;
-	/*NULL, 19, 48, 9, 71, 13, NULL*/
 
-	back->next = current->next;
-	if (current->next)
-		current->next->prev = back;
-	current->next = back;
-	current->prev = back->prev;
-	back->prev = current;
-	if (current->prev)
-		current->prev->next = current;
-	else
-		*list = current;
-	return (current);
-}
 /**
- *cocktail_sort_list - this is a cocktail sort implementation
- *working on a double linked lists
- *@list: list
+ * bubble_sort - sort list with bubble
+ * @array: The array to be printed
+ * @size: Number of elements in @array
  */
-void cocktail_sort_list(listint_t **list)
+void bubble_sort(int *array, size_t size)
 {
-	listint_t *node;
-	int swap_done = 1;
+	size_t n = 0, t = size;
+	int holder;
 
-	if (list == '\0' || (*list) == '\0' || (*list)->next == '\0')
+	if (array == NULL)
 		return;
-	node = *list;
-	while (swap_done == 1)
+	for (t = size; t > 0; t--)
 	{
-		swap_done = 0;
-		while (node->next)
+		for (n = 0; n < size - 1; n++)
 		{
-			if (node->n > node->next->n)
+			if (array[n] > array[n + 1])
 			{
-				node = swap_node(node->next, list);
-				swap_done = 1;
-				print_list(*list);
+				holder = array[n];
+				array[n] = array[n + 1];
+				array[n + 1] = holder;
+				print_array(array, size);
 			}
-			node = node->next;
-		}
-		if (swap_done == 0)
-			break;
-		swap_done = 0;
-		while (node->prev)
-		{
-			if (node->n < node->prev->n)
-			{
-				node = swap_node(node, list);
-				swap_done = 1;
-				print_list(*list);
-			}
-			else
-				node = node->prev;
 		}
 	}
 }
